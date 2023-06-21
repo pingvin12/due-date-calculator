@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod utility_tests {
-    
+
     use std::time::{Duration, SystemTime};
 
     use due_date_calculator::misc::datetime_utils::{DatetimeUtils, EligibleDays};
@@ -12,16 +12,20 @@ mod utility_tests {
     #[test_case(SystemTime::UNIX_EPOCH + Duration::from_secs(1667320800), "2023-06-22 16:12:00".to_owned(), false; "Valid system time with a different time zone")]
     fn test_format_system_time(date: SystemTime, formatted_date: String, success: bool) {
         match success {
-            true => assert_eq!(formatted_date ,DatetimeUtils::format_system_time(date)),
-            false => assert_ne!(formatted_date ,DatetimeUtils::format_system_time(date))
+            true => assert_eq!(formatted_date, DatetimeUtils::format_system_time(date)),
+            false => assert_ne!(formatted_date, DatetimeUtils::format_system_time(date)),
         }
     }
 
     #[test_case(SystemTime::UNIX_EPOCH + Duration::from_secs(1624366320), EligibleDays::Friday, true; "day of the week function should return the correct day of the date given")]
-    fn test_get_correct_day_of_the_week(date: SystemTime, expected_day: EligibleDays, success: bool) {
+    fn test_get_correct_day_of_the_week(
+        date: SystemTime,
+        expected_day: EligibleDays,
+        success: bool,
+    ) {
         match success {
             true => assert_eq!(expected_day, DatetimeUtils::get_day_of_week(date)),
-            false => assert_ne!(expected_day, DatetimeUtils::get_day_of_week(date))
+            false => assert_ne!(expected_day, DatetimeUtils::get_day_of_week(date)),
         }
     }
 }

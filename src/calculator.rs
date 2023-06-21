@@ -1,7 +1,10 @@
-use std::time::{SystemTime, UNIX_EPOCH, Duration};
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
-use crate::misc::{errortypes::calculation_error::CalculationError, datetime_utils::DatetimeUtils, datetime_utils::{EligibleDays, WORKDAY_LENGTH}};
-
+use crate::misc::{
+    datetime_utils::DatetimeUtils,
+    datetime_utils::{EligibleDays, WORKDAY_LENGTH},
+    errortypes::calculation_error::CalculationError,
+};
 
 pub struct Calculator {
     workday_length: i16,
@@ -10,11 +13,17 @@ pub struct Calculator {
 impl Calculator {
     // retrieve workday length thats static and store it for ease of access
     pub fn new() -> Result<Self, CalculationError> {
-    Ok(Calculator { workday_length: WORKDAY_LENGTH.to_owned().try_into().unwrap() })
+        Ok(Calculator {
+            workday_length: WORKDAY_LENGTH.to_owned().try_into().unwrap(),
+        })
     }
 
     //main entry function used after validating input
-    pub fn calculate_due_date(&mut self, creation_date: SystemTime, turnaround_hours: i16) -> Result<SystemTime, CalculationError> {
+    pub fn calculate_due_date(
+        &mut self,
+        creation_date: SystemTime,
+        turnaround_hours: i16,
+    ) -> Result<SystemTime, CalculationError> {
         let mut workdays = self.get_work_days(turnaround_hours);
 
         let mut due_date = creation_date;
@@ -49,14 +58,11 @@ impl Calculator {
     fn get_work_days(&mut self, hours: i16) -> i16 {
         return hours / self.workday_length;
     }
-    
 }
 
 // Default implementation for calculator incase of getting rid of static inputs.
 impl Default for Calculator {
     fn default() -> Self {
-        Calculator {
-            workday_length: 8,
-        }
+        Calculator { workday_length: 8 }
     }
 }

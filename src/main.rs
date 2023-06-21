@@ -1,6 +1,12 @@
+use due_date_calculator::{
+    calculator::Calculator,
+    misc::datetime_utils::DatetimeUtils,
+    validator::{
+        localdatetime::DatetimeValidator, turnaround::TurnaroundValidator,
+        workhours::WorkhoursValidator,
+    },
+};
 use std::{env, process};
-use due_date_calculator::{calculator::Calculator, validator::{localdatetime::DatetimeValidator,workhours::WorkhoursValidator, turnaround::TurnaroundValidator}, misc::datetime_utils::DatetimeUtils};
-
 
 fn main() {
     // Retrieve command-line arguments
@@ -53,5 +59,4 @@ fn main() {
 
     // Print the due date
     println!("{}", DatetimeUtils::format_system_time(due_date));
-
 }
