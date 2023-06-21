@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+
+    - name: Build and test
+      run: |
+        cargo build --verbose
+        cargo test --verbose
+
+    - name: Create executable
+      run: |
+        cargo build --release
+
+    - name: Upload executable
+      uses: actions/upload-artifact@v2
+      with:
+        name: due-date-calculator
+        path: due-date-calculator/target/release/due-date-calculator

@@ -1,4 +1,4 @@
-# due-date-calculator ![workflow](https://github.com/pingvin12/due-date-calculator/actions/workflows/workflow.yml/badge.svg)
+# due-date-calculator ![workflow](https://github.com/pingvin12/due-date-calculator/actions/workflows/ci.yml/badge.svg)
 
 
 A cli tool for calculating due dates based on a given date and turnaround time.
