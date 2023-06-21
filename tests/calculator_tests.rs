@@ -14,12 +14,12 @@ mod duedate_tests {
         turnaround_hours: i16,
         duedate: SystemTime,
     ) {
-        let mut calc = Calculator::new().unwrap();
-        let res = calc.calculate_due_date(creation_date, turnaround_hours);
+        let mut calculator = Calculator::new().unwrap();
+        let res = calculator.calculate_due_date(creation_date, turnaround_hours);
         if let Ok(value) = res {
-            let fmt = format!("{}", DatetimeUtils::format_system_time(value));
-            let fmt_expected = format!("{}", DatetimeUtils::format_system_time(duedate));
-            assert_eq!(fmt_expected, fmt);
+            let formatted = format!("{}", DatetimeUtils::format_system_time(value));
+            let formatted_expected = format!("{}", DatetimeUtils::format_system_time(duedate));
+            assert_eq!(formatted_expected, formatted);
         }
     }
 }

@@ -7,6 +7,7 @@ use crate::misc::errortypes::validation_error::ValidationError;
 pub struct DatetimeValidator {}
 
 impl DatetimeValidator {
+    // validates datetime by parsing from string reference.
     pub fn validate(datetime: &str) -> Result<SystemTime, ValidationError> {
         let var = match DateTime::<Utc>::from_str(datetime) {
             Ok(system_time) => system_time,

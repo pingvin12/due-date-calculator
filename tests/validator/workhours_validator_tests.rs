@@ -1,8 +1,6 @@
 #[cfg(test)]
 mod workhours_validator_tests {
-    use due_date_calculator::validator::{
-        workhours::WorkhoursValidator,
-    };
+    use due_date_calculator::validator::workhours::WorkhoursValidator;
     use std::time::{Duration, SystemTime};
     use test_case::test_case;
 

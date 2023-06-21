@@ -17,25 +17,29 @@ impl WorkhoursValidator {
         let _ = Self::created_on_workday(datetime);
     }
 
+    // Checks that the datetime given is on a workday by comparing the day of the week with a static hashmap that contains the days of the week
     fn created_on_workday(datetime: SystemTime) -> Result<(), ValidationError> {
         let dt: DateTime<Local> = datetime.into();
         let day = DatetimeUtils::get_day_of_week(datetime);
+        //find item from hashmap
         let dur = DAYS_MAP.iter().find(|(_, v)| **v == Arc::new(day.clone()));
 
         if let Some((_, _)) = dur {
             return Ok(());
         } else {
+            // throw error if somehow the day doesnt exist in the hashmap
             return Err(ValidationError::InvalidWorkingDaysDate {
                 found: dt.format("%Y-%m-%d %H:%M:%S").to_string(),
             });
         }
     }
 
+    // checks the given datetime and throws an error if not inside workhours
     fn created_during_workhours(datetime: SystemTime) -> Result<(), ValidationError> {
         let dt: DateTime<Local> = datetime.into();
         let before: u8 = WORKINGHOURS_BEFORE.to_owned().try_into().unwrap();
-
         let after: u8 = WORKINGHOURS_AFTER.to_owned().try_into().unwrap();
+
         if DatetimeUtils::has_surpassed_hours(datetime, before)
             && !DatetimeUtils::has_surpassed_hours(datetime, after)
         {

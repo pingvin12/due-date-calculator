@@ -38,9 +38,10 @@ lazy_static! {
 pub struct DatetimeUtils {}
 
 impl DatetimeUtils {
+    // Returns EligibleDays enum by checking the current day of the week
     pub fn get_day_of_week(datetime: SystemTime) -> EligibleDays {
         let duration = match datetime.duration_since(UNIX_EPOCH) {
-            Ok(next) => next.as_secs() / (24 * 60 * 60),
+            Ok(next) => next.as_secs() / (24 * 60 * 60), // Divide the duration in seconds by the number of seconds in a day
             Err(e) => panic!("{}", e),
         };
 
@@ -50,8 +51,9 @@ impl DatetimeUtils {
 
         day_of_the_week.unwrap().1.as_ref().clone()
     }
-
+    // Checks if date has surpassed given hours in datetime format.
     pub fn has_surpassed_hours(date: SystemTime, hours: u8) -> bool {
+        // Subtract the number of seconds since the Unix epoch modulo the number of seconds in a day
         let start_of_day = {
             let mut date = date;
             date = date
@@ -63,7 +65,7 @@ impl DatetimeUtils {
                 );
             date + Duration::from_secs(8 * 60 * 60)
         };
-
+        // Calculate the duration between the date and the start of the day
         let duration = match date.duration_since(start_of_day) {
             Ok(dur) => dur,
             Err(_) => return false, // date is earlier than start_of_day
@@ -72,15 +74,15 @@ impl DatetimeUtils {
         let seconds_passed = duration.as_secs();
         let hours_passed = seconds_passed / 3600;
 
-        hours_passed >= u64::from(hours)
+        hours_passed >= u64::from(hours) // Check if the hours passed is greater than or equal to the provided hours
     }
-
+    // Creates a formatted string from SystemTime
     pub fn format_system_time(system_time: SystemTime) -> String {
         let local_datetime: DateTime<Local> = system_time.into();
         let formatted_time = local_datetime.format("%Y-%m-%d %H:%M:%S");
         formatted_time.to_string()
     }
-    // Adding days to system_time
+    // Adds a specified number of days to a SystemTime value
     pub fn add_days(system_time: SystemTime, days: u64) -> SystemTime {
         let duration = Duration::from_secs(days * 24 * 60 * 60);
         system_time + duration
