@@ -9,10 +9,4 @@ run `cargo build` in source directory or run from release.
 
 ## Testing
 
-The crate includes comprehensive tests to ensure the accuracy and reliability of the due date calculation. To run the tests, use the following command:
-
-`cargo test`
-
-License
-
-This project is licensed under the MIT License.
+for testing simply run `cargo test`
